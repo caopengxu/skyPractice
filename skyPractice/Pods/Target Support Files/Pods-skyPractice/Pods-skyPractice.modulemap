@@ -1,0 +1,6 @@
+framework module Pods_skyPractice {
+  umbrella header "Pods-skyPractice-umbrella.h"
+
+  export *
+  module * { export * }
+}
