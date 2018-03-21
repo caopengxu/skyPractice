@@ -21,7 +21,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8MU-oB-gxU">
                                 <rect key="frame" x="0.0" y="20" width="375" height="319.5"/>
                                 <connections>
-                                    <segue destination="jDr-Dr-XQF" kind="embed" id="aFR-dX-tu8"/>
+                                    <segue destination="jDr-Dr-XQF" kind="embed" identifier="SegueCurrentWeather" id="aFR-dX-tu8"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ymD-XO-bs3">
@@ -72,10 +72,16 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mm5-MR-W5R">
                                         <rect key="frame" x="8" y="8" width="44" height="44"/>
                                         <state key="normal" image="LocationBtn"/>
+                                        <connections>
+                                            <action selector="locationButtonClick:" destination="jDr-Dr-XQF" eventType="touchUpInside" id="hcM-6D-zuW"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OFG-fM-G20">
                                         <rect key="frame" x="323" y="8" width="44" height="44"/>
                                         <state key="normal" image="Setting"/>
+                                        <connections>
+                                            <action selector="settingsButtonClick:" destination="jDr-Dr-XQF" eventType="touchUpInside" id="bzz-Sm-erI"/>
+                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clear-day" translatesAutoresizingMaskIntoConstraints="NO" id="b2O-hG-Jiq">
                                         <rect key="frame" x="112.5" y="85" width="150" height="150"/>
