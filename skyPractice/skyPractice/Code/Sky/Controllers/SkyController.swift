@@ -30,6 +30,8 @@ class SkyController: UIViewController {
     var currentWeatherController: CurrentWeatherController!
     fileprivate let segueCurrentWeather = "SegueCurrentWeather"
     
+    var weekWeatherController: WeekWeatherController!
+    fileprivate let segueWeekWeather = "SegueWeekWeather"
     
     
     // viewDidLoad
@@ -40,7 +42,7 @@ class SkyController: UIViewController {
     }
     
     
-    // CurrentWeatherController
+    // prepare
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         guard let identifier = segue.identifier else {return}
@@ -53,7 +55,15 @@ class SkyController: UIViewController {
             }
             
             destination.delegate = self
+            destination.viewMdoel = CurrentWeatherViewModel()
             currentWeatherController = destination
+        case segueWeekWeather:
+            guard let destination = segue.destination as? WeekWeatherController else
+            {
+                fatalError("Invalid destination view controller.")
+            }
+            
+            weekWeatherController = destination
         default:
             break
         }
@@ -105,7 +115,7 @@ class SkyController: UIViewController {
             {
                 let l = Location(name: city, latitude: lat, longitude: lon)
                 
-                self.currentWeatherController.location = l
+                self.currentWeatherController.viewMdoel?.location = l
             }
         })
     }
@@ -127,7 +137,9 @@ class SkyController: UIViewController {
             }
             else if let weatherData = weatherData
             {
-                self.currentWeatherController.now = weatherData
+                self.currentWeatherController.viewMdoel?.weather = weatherData
+                self.weekWeatherController.viewModel = WeekWeatherViewModel(weekData: weatherData.daily.data)
+                
             }
         }
     }

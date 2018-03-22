@@ -24,16 +24,8 @@ class CurrentWeatherController: WeatherController {
     @IBOutlet weak var dateLabel: UILabel!
     
     weak var delegate: CurrentWeatherControllerDelegate?
-    var now: WeatherData?
-    {
-        didSet
-        {
-            DispatchQueue.main.async {
-                self.updateView()
-            }
-        }
-    }
-    var location: Location?
+    
+    var viewMdoel: CurrentWeatherViewModel?
     {
         didSet
         {
@@ -57,10 +49,9 @@ class CurrentWeatherController: WeatherController {
     {
         activityIndicatorView.stopAnimating()
         
-        if let now = now,
-            let location = location
+        if let viewModel = viewMdoel, viewModel.isUpdateReady
         {
-            updateWeatherContainer(with: now, at: location)
+            updateWeatherContainer(with: viewMdoel!)
         }
         else
         {
@@ -70,19 +61,16 @@ class CurrentWeatherController: WeatherController {
     
     
     // 更新UI(2)
-    fileprivate func updateWeatherContainer(with data: WeatherData, at location: Location)
+    fileprivate func updateWeatherContainer(with viewModel: CurrentWeatherViewModel)
     {
         weatherContainerView.isHidden = false
         
-        locationLabel.text = location.name
-        temperatureLabel.text = String(format: "%.1f °C", data.currently.temperature.toCelcius())
-        weatherIcon.image = weatherIcon(of: data.currently.icon)
-        humidityLabel.text = String(format: "%.1f %%", data.currently.humidity * 100)
-        summaryLabel.text = data.currently.summary
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, dd MMMM"
-        dateLabel.text = formatter.string(from: data.currently.time)
+        locationLabel.text = viewModel.city
+        temperatureLabel.text = viewModel.temperature
+        weatherIcon.image = viewModel.weatherIcon
+        humidityLabel.text = viewModel.humidity
+        summaryLabel.text = viewModel.summary
+        dateLabel.text = viewModel.date
     }
     
     
