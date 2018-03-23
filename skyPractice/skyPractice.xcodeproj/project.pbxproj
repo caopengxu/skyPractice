@@ -28,6 +28,12 @@
 		BFF50D5420635C1A0071D5EE /* WeekWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50D5320635C1A0071D5EE /* WeekWeatherViewModel.swift */; };
 		BFF50D5620635C920071D5EE /* WeekData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50D5520635C920071D5EE /* WeekData.swift */; };
 		BFF50D59206380870071D5EE /* WeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50D58206380870071D5EE /* WeekCell.swift */; };
+		BFF50D5B2064AB3A0071D5EE /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50D5A2064AB3A0071D5EE /* SettingsController.swift */; };
+		BFF50D5D2064D2C40071D5EE /* SettingsDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50D5C2064D2C40071D5EE /* SettingsDateViewModel.swift */; };
+		BFF50D5F2064D2DF0071D5EE /* SettingsTemperatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50D5E2064D2DF0071D5EE /* SettingsTemperatureViewModel.swift */; };
+		BFF50D612064D4000071D5EE /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50D602064D4000071D5EE /* UserDefaults.swift */; };
+		BFF50D632064DDAF0071D5EE /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50D622064DDAF0071D5EE /* SettingsCell.swift */; };
+		BFF50D692064FC460071D5EE /* SettingsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50D682064FC450071D5EE /* SettingsContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +82,12 @@
 		BFF50D5320635C1A0071D5EE /* WeekWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekWeatherViewModel.swift; sourceTree = "<group>"; };
 		BFF50D5520635C920071D5EE /* WeekData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekData.swift; sourceTree = "<group>"; };
 		BFF50D58206380870071D5EE /* WeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCell.swift; sourceTree = "<group>"; };
+		BFF50D5A2064AB3A0071D5EE /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		BFF50D5C2064D2C40071D5EE /* SettingsDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDateViewModel.swift; sourceTree = "<group>"; };
+		BFF50D5E2064D2DF0071D5EE /* SettingsTemperatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTemperatureViewModel.swift; sourceTree = "<group>"; };
+		BFF50D602064D4000071D5EE /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		BFF50D622064DDAF0071D5EE /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		BFF50D682064FC450071D5EE /* SettingsContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContent.swift; sourceTree = "<group>"; };
 		C9F0982D6013B29BE0349328 /* Pods-skyPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skyPractice.release.xcconfig"; path = "Pods/Target Support Files/Pods-skyPractice/Pods-skyPractice.release.xcconfig"; sourceTree = "<group>"; };
 		CE58BD7516E5D4942ADA7F81 /* Pods-skyPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skyPractice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skyPractice/Pods-skyPractice.debug.xcconfig"; sourceTree = "<group>"; };
 		EEA3D6733AD771E3F628C2B3 /* Pods_skyPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skyPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,10 +210,11 @@
 		BFF50D2D2061F4A30071D5EE /* Sky */ = {
 			isa = PBXGroup;
 			children = (
-				BFF50D322061F4A30071D5EE /* Controllers */,
 				BFF50D2E2061F4A30071D5EE /* Storyboards */,
-				BFF50D312061F4A30071D5EE /* Manager */,
+				BFF50D322061F4A30071D5EE /* Controllers */,
 				BFF50D2F2061F4A30071D5EE /* Models */,
+				BFF50D312061F4A30071D5EE /* Manager */,
+				BFF50D652064DEE50071D5EE /* Protocols */,
 				BFF50D302061F4A30071D5EE /* Extensions */,
 			);
 			path = Sky;
@@ -230,6 +243,7 @@
 			children = (
 				BFF50D46206233CA0071D5EE /* Double.swift */,
 				BFF50D4C206259A00071D5EE /* SkyUIImage.swift */,
+				BFF50D602064D4000071D5EE /* UserDefaults.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -251,6 +265,7 @@
 				BFF50D3A2061F5980071D5EE /* WeatherController.swift */,
 				BFF50D382061F58E0071D5EE /* CurrentWeatherController.swift */,
 				BFF50D5120635B700071D5EE /* WeekWeatherController.swift */,
+				BFF50D5A2064AB3A0071D5EE /* SettingsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -260,6 +275,8 @@
 			children = (
 				BFF50D4F20625BD40071D5EE /* CurrentWeatherViewModel.swift */,
 				BFF50D5320635C1A0071D5EE /* WeekWeatherViewModel.swift */,
+				BFF50D5C2064D2C40071D5EE /* SettingsDateViewModel.swift */,
+				BFF50D5E2064D2DF0071D5EE /* SettingsTemperatureViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -268,8 +285,17 @@
 			isa = PBXGroup;
 			children = (
 				BFF50D58206380870071D5EE /* WeekCell.swift */,
+				BFF50D622064DDAF0071D5EE /* SettingsCell.swift */,
 			);
 			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		BFF50D652064DEE50071D5EE /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BFF50D682064FC450071D5EE /* SettingsContent.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,16 +495,22 @@
 				BFF50D392061F58E0071D5EE /* CurrentWeatherController.swift in Sources */,
 				BFF50CFE2060A4950071D5EE /* AppDelegate.swift in Sources */,
 				BFF50D4B20623A5A0071D5EE /* Configuration.swift in Sources */,
+				BFF50D692064FC460071D5EE /* SettingsContent.swift in Sources */,
 				BFF50D4320622DBE0071D5EE /* Location.swift in Sources */,
 				BFF50D4D206259A00071D5EE /* SkyUIImage.swift in Sources */,
 				BFF50D3B2061F5980071D5EE /* WeatherController.swift in Sources */,
 				BFF50D59206380870071D5EE /* WeekCell.swift in Sources */,
+				BFF50D5B2064AB3A0071D5EE /* SettingsController.swift in Sources */,
 				BFF50D4520622DCE0071D5EE /* WeatherData.swift in Sources */,
 				BFF50D352061F54A0071D5EE /* SkyController.swift in Sources */,
 				BFF50D47206233CA0071D5EE /* Double.swift in Sources */,
 				BFF50D5420635C1A0071D5EE /* WeekWeatherViewModel.swift in Sources */,
+				BFF50D612064D4000071D5EE /* UserDefaults.swift in Sources */,
+				BFF50D632064DDAF0071D5EE /* SettingsCell.swift in Sources */,
+				BFF50D5D2064D2C40071D5EE /* SettingsDateViewModel.swift in Sources */,
 				BFF50D5220635B700071D5EE /* WeekWeatherController.swift in Sources */,
 				BFF50D5020625BD40071D5EE /* CurrentWeatherViewModel.swift in Sources */,
+				BFF50D5F2064D2DF0071D5EE /* SettingsTemperatureViewModel.swift in Sources */,
 				BFF50D5620635C920071D5EE /* WeekData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

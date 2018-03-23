@@ -33,6 +33,8 @@ class SkyController: UIViewController {
     var weekWeatherController: WeekWeatherController!
     fileprivate let segueWeekWeather = "SegueWeekWeather"
     
+    fileprivate let segueSettings = "SegueSettings"
+    
     
     // viewDidLoad
     override func viewDidLoad() {
@@ -64,6 +66,13 @@ class SkyController: UIViewController {
             }
             
             weekWeatherController = destination
+        case segueSettings:
+            guard let destination = segue.destination as? SettingsController else
+            {
+                fatalError("Invalid destination view controller.")
+            }
+            
+            
         default:
             break
         }

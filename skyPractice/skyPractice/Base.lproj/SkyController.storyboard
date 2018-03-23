@@ -44,10 +44,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XIa-ew-6e6"/>
                     </view>
+                    <connections>
+                        <segue destination="Ooc-Up-n1o" kind="presentation" identifier="SegueSettings" id="tuU-v6-Bxk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ae-3I-pXR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-308" y="70"/>
+            <point key="canvasLocation" x="-249" y="82"/>
         </scene>
         <!--Current Weather Controller-->
         <scene sceneID="VbH-RZ-Cea">
@@ -172,7 +175,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PSd-y8-BMY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="478" y="-120"/>
+            <point key="canvasLocation" x="-564" y="701"/>
         </scene>
         <!--Week Weather Controller-->
         <scene sceneID="vek-dY-iGB">
@@ -304,7 +307,72 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bv1-eq-dTX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="477.60000000000002" y="259.97001499250376"/>
+            <point key="canvasLocation" x="62" y="701"/>
+        </scene>
+        <!--设置-->
+        <scene sceneID="928-AO-GxV">
+            <objects>
+                <viewController id="v5b-Kh-Zlg" customClass="SettingsController" customModule="skyPractice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0JW-Jk-2rM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dZW-FT-Lfm">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsCell" id="ty1-vX-T9V" customClass="SettingsCell" customModule="skyPractice" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ty1-vX-T9V" id="xYQ-dT-HwX">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="v5b-Kh-Zlg" id="jAL-wc-cIF"/>
+                                    <outlet property="delegate" destination="v5b-Kh-Zlg" id="GrG-57-kwS"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dZW-FT-Lfm" firstAttribute="top" secondItem="Tn8-Se-4HF" secondAttribute="top" id="DDv-HR-pCs"/>
+                            <constraint firstItem="Tn8-Se-4HF" firstAttribute="bottom" secondItem="dZW-FT-Lfm" secondAttribute="bottom" id="EcL-Mw-P5P"/>
+                            <constraint firstItem="dZW-FT-Lfm" firstAttribute="leading" secondItem="Tn8-Se-4HF" secondAttribute="leading" id="MR0-2M-iLL"/>
+                            <constraint firstAttribute="trailing" secondItem="dZW-FT-Lfm" secondAttribute="trailing" id="kzV-Pl-JkX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Tn8-Se-4HF"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="设置" id="xMi-kZ-2SL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Moj-u9-4kQ"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="dZW-FT-Lfm" id="HpD-tq-fCb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FUT-6s-PNa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1231" y="81"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZAL-w8-K5q">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ooc-Up-n1o" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="D5g-BI-xFT">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="v5b-Kh-Zlg" kind="relationship" relationship="rootViewController" id="v1T-pm-Xoe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rdm-VX-AHA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="489" y="81"/>
         </scene>
     </scenes>
     <resources>
