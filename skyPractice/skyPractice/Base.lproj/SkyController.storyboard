@@ -317,17 +317,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dZW-FT-Lfm">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="45" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dZW-FT-Lfm">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsCell" id="ty1-vX-T9V" customClass="SettingsCell" customModule="skyPractice" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ty1-vX-T9V" id="xYQ-dT-HwX">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfg-SF-9eT">
+                                                    <rect key="frame" x="8" y="12" width="359" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="bfg-SF-9eT" secondAttribute="bottom" constant="12" id="AIQ-C2-wUw"/>
+                                                <constraint firstItem="bfg-SF-9eT" firstAttribute="top" secondItem="xYQ-dT-HwX" secondAttribute="top" constant="12" id="cfT-LS-BjA"/>
+                                                <constraint firstItem="bfg-SF-9eT" firstAttribute="leading" secondItem="xYQ-dT-HwX" secondAttribute="leading" constant="8" id="oEF-0s-znJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="bfg-SF-9eT" secondAttribute="trailing" constant="8" id="piV-am-fap"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="label" destination="bfg-SF-9eT" id="QFC-sV-FuT"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -345,16 +362,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Tn8-Se-4HF"/>
                     </view>
-                    <navigationItem key="navigationItem" title="设置" id="xMi-kZ-2SL">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Moj-u9-4kQ"/>
+                    <navigationItem key="navigationItem" title="设置" id="4QG-x8-2uB">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="WwE-SY-C52">
+                            <connections>
+                                <segue destination="cWf-bG-hUR" kind="unwind" unwindAction="unwindToRootViewControllerWithSegue:" id="Xuc-rW-CLf"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="dZW-FT-Lfm" id="HpD-tq-fCb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FUT-6s-PNa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="cWf-bG-hUR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1231" y="81"/>
+            <point key="canvasLocation" x="1229.5999999999999" y="80.50974512743629"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZAL-w8-K5q">

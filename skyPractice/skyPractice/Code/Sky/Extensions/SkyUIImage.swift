@@ -8,8 +8,8 @@
 
 import UIKit
 
-extension UIImage {
-    
+extension UIImage
+{    
     // 判断天气
     class func weatherIcon(of name: String) -> UIImage?
     {

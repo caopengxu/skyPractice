@@ -32,7 +32,7 @@ class WeekWeatherController: WeatherController {
     
     
     // 刷新界面
-    fileprivate func updateView()
+    func updateView()
     {
         activityIndicatorView.stopAnimating()
         
@@ -82,13 +82,9 @@ extension WeekWeatherController: UITableViewDelegate, UITableViewDataSource
             fatalError("Unexpected table view cell.")
         }
         
-        if let viewModel = viewModel
+        if let weatherDay = viewModel?.viewModel(for: indexPath.row)
         {
-            row.week.text = viewModel.week(for: indexPath.row)
-            row.date.text = viewModel.date(for: indexPath.row)
-            row.temperature.text = viewModel.temperature(for: indexPath.row)
-            row.weatherIcon.image = viewModel.weatherIcon(for: indexPath.row)
-            row.humid.text = viewModel.humidity(for: indexPath.row)
+            row.configure(with: weatherDay)
         }
         
         return row

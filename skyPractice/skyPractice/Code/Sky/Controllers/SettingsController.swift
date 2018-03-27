@@ -22,18 +22,9 @@ class SettingsController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
     }
-    
-    
-    
-    
-    
-
 }
-
-
 
 
 extension SettingsController: UITableViewDataSource, UITableViewDelegate

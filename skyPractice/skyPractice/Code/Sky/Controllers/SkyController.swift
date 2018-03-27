@@ -35,6 +35,8 @@ class SkyController: UIViewController {
     
     fileprivate let segueSettings = "SegueSettings"
     
+    @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {}
+    
     
     // viewDidLoad
     override func viewDidLoad() {
@@ -67,12 +69,17 @@ class SkyController: UIViewController {
             
             weekWeatherController = destination
         case segueSettings:
-            guard let destination = segue.destination as? SettingsController else
+            guard let navigationController = segue.destination as? UINavigationController else
             {
                 fatalError("Invalid destination view controller.")
             }
             
+            guard let destination = navigationController.topViewController as? SettingsController else
+            {
+                fatalError("Invalid destination view controller.")
+            }
             
+            destination.delegate = self
         default:
             break
         }
@@ -147,8 +154,7 @@ class SkyController: UIViewController {
             else if let weatherData = weatherData
             {
                 self.currentWeatherController.viewMdoel?.weather = weatherData
-                self.weekWeatherController.viewModel = WeekWeatherViewModel(weekData: weatherData.daily.data)
-                
+                self.weekWeatherController.viewModel = WeekWeatherViewModel(weatherData: weatherData.daily.data)                
             }
         }
     }
@@ -190,7 +196,26 @@ extension SkyController: CurrentWeatherControllerDelegate
     }
     func settingsButtonPressed(controller: CurrentWeatherController)
     {
-        print("Open settings")
+        performSegue(withIdentifier: segueSettings, sender: self)
+    }
+}
+
+
+extension SkyController: SettingsViewControllerDelegate
+{
+    func controllerDidChangeTimeMode(controller: SettingsController)
+    {
+        reloadUI()
+    }
+    func controllerDidChangeTemperatureMode(controller: SettingsController)
+    {
+        reloadUI()
+    }
+    
+    func reloadUI()
+    {
+        currentWeatherController.updateView()
+        weekWeatherController.updateView()
     }
 }
 
