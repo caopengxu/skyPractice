@@ -34,6 +34,7 @@ class SkyController: UIViewController {
     fileprivate let segueWeekWeather = "SegueWeekWeather"
     
     fileprivate let segueSettings = "SegueSettings"
+    fileprivate let segueLocation = "SegueLocation"
     
     @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {}
     
@@ -49,39 +50,55 @@ class SkyController: UIViewController {
     // prepare
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        guard let identifier = segue.identifier else {return}
-        
-        switch identifier {
-        case segueCurrentWeather:
-            guard let destination = segue.destination as? CurrentWeatherController else
-            {
-                fatalError("Invalid destination view controller.")
+        if let identifier = segue.identifier
+        {
+            switch identifier {
+            case "":
+                fatalError("没有设置identifier")
+            case segueCurrentWeather:
+                guard let destination = segue.destination as? CurrentWeatherController else
+                {
+                    fatalError("Invalid destination view controller.")
+                }
+                
+                destination.delegate = self
+                destination.viewMdoel = CurrentWeatherViewModel()
+                currentWeatherController = destination
+            case segueWeekWeather:
+                guard let destination = segue.destination as? WeekWeatherController else
+                {
+                    fatalError("Invalid destination view controller.")
+                }
+                
+                weekWeatherController = destination
+            case segueSettings:
+                guard let navigationController = segue.destination as? UINavigationController else
+                {
+                    fatalError("Invalid destination view controller.")
+                }
+                
+                guard let destination = navigationController.topViewController as? SettingsController else
+                {
+                    fatalError("Invalid destination view controller.")
+                }
+                
+                destination.delegate = self
+            case segueLocation:
+                guard let navigationController = segue.destination as? UINavigationController else
+                {
+                    fatalError("segue error")
+                }
+                
+                guard let destination = navigationController.topViewController as? LocationController else
+                {
+                    fatalError("segue error")
+                }
+                
+                destination.delegate = self
+                destination.currentLocation = currentLocation
+            default:
+                break
             }
-            
-            destination.delegate = self
-            destination.viewMdoel = CurrentWeatherViewModel()
-            currentWeatherController = destination
-        case segueWeekWeather:
-            guard let destination = segue.destination as? WeekWeatherController else
-            {
-                fatalError("Invalid destination view controller.")
-            }
-            
-            weekWeatherController = destination
-        case segueSettings:
-            guard let navigationController = segue.destination as? UINavigationController else
-            {
-                fatalError("Invalid destination view controller.")
-            }
-            
-            guard let destination = navigationController.topViewController as? SettingsController else
-            {
-                fatalError("Invalid destination view controller.")
-            }
-            
-            destination.delegate = self
-        default:
-            break
         }
     }
     
@@ -192,7 +209,7 @@ extension SkyController: CurrentWeatherControllerDelegate
 {
     func locationButtonPressed(controller: CurrentWeatherController)
     {
-        print("Open locations")
+        performSegue(withIdentifier: segueLocation, sender: self)
     }
     func settingsButtonPressed(controller: CurrentWeatherController)
     {
@@ -216,6 +233,15 @@ extension SkyController: SettingsViewControllerDelegate
     {
         currentWeatherController.updateView()
         weekWeatherController.updateView()
+    }
+}
+
+
+extension SkyController: LocationControllerDelegate
+{
+    func controller(_ controller: LocationController, location: CLLocation)
+    {
+        currentLocation = location
     }
 }
 

@@ -1,8 +1,8 @@
 //
-//  SettingsContent.swift
+//  SettingsRepresentable.swift
 //  skyPractice
 //
-//  Created by caopengxu on 2018/3/23.
+//  Created by caopengxu on 2018/3/28.
 //  Copyright © 2018年 caopengxu. All rights reserved.
 //
 

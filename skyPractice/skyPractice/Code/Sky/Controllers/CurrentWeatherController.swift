@@ -8,7 +8,8 @@
 
 import UIKit
 
-protocol CurrentWeatherControllerDelegate: class {
+protocol CurrentWeatherControllerDelegate: class
+{
     func locationButtonPressed(controller: CurrentWeatherController)
     func settingsButtonPressed(controller: CurrentWeatherController)
 }

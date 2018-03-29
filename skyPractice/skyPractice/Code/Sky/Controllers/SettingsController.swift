@@ -8,7 +8,8 @@
 
 import UIKit
 
-protocol SettingsViewControllerDelegate {
+protocol SettingsViewControllerDelegate
+{
     func controllerDidChangeTimeMode(controller: SettingsController)
     func controllerDidChangeTemperatureMode(controller: SettingsController)
 }
@@ -43,6 +44,16 @@ extension SettingsController: UITableViewDataSource, UITableViewDelegate
         {
             return 2
         }
+        
+        var title: String
+        {
+            switch self {
+            case .date:
+                return "日期格式"
+            case .temperature:
+                return "温度格式"
+            }
+        }
     }
     
     
@@ -61,14 +72,12 @@ extension SettingsController: UITableViewDataSource, UITableViewDelegate
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
-        if section == 0
+        guard let section = Section(rawValue: section) else
         {
-            return "Date format"
+            fatalError("Unexpected section index")
         }
-        else
-        {
-            return "Temperature unit"
-        }
+        
+        return section.title
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
@@ -84,7 +93,7 @@ extension SettingsController: UITableViewDataSource, UITableViewDelegate
         
         var vm: SettingsRepresentable?
         
-        switch section {
+        switch section{
         case .date:
             guard let dateModel = DateModel(rawValue: indexPath.row) else
             {

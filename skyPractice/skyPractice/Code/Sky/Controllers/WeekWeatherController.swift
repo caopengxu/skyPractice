@@ -76,18 +76,17 @@ extension WeekWeatherController: UITableViewDelegate, UITableViewDataSource
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: WeekCell.reuseIdentifier, for: indexPath) as? WeekCell
-        
-        guard let row = cell else {
-            fatalError("Unexpected table view cell.")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: WeekCell.reuseIdentifier, for: indexPath) as? WeekCell else
+        {
+            fatalError("cell error")
         }
         
         if let weatherDay = viewModel?.viewModel(for: indexPath.row)
         {
-            row.configure(with: weatherDay)
+            cell.configure(with: weatherDay)
         }
         
-        return row
+        return cell
     }
 }
 
