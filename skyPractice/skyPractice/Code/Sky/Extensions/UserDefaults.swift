@@ -86,7 +86,7 @@ extension UserDefaults
             return []
         }
         
-        return dictionaries.flatMap {
+        return dictionaries.compactMap {
             return Location(from: $0)
         }
     }

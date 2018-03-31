@@ -21,8 +21,7 @@ class AddLocationController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     var delegate: AddLocationControllerDelegate?
-    private var locations: [Location] = []
-    private lazy var geocoder = CLGeocoder()
+    var viewModel = AddLocationViewModel()
     
     
     // 界面显示前后
@@ -39,57 +38,33 @@ class AddLocationController: UIViewController {
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: LocationCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: LocationCell.reuseIdentifier)
-    }
-
-    
-    // 搜索位置、地理编码
-    private func geocode(address: String?)
-    {
-        if let address = address
-        {
-            geocoder.geocodeAddressString(address, completionHandler: {
-                [weak self] (placemarks, error) in
-                DispatchQueue.main.async {
-                    self?.processResponse(placemarks: placemarks, error: error)
-                }
-            })
-        }
-        else
-        {
-            locations = []
-            tableView.reloadData()
-        }
-    }
-    
-    
-    // 设置数据、刷新界面
-    private func processResponse(placemarks: [CLPlacemark]?, error: Error?)
-    {
-        if let error = error
-        {
-            print("Cannot handle Geocode Address! \(error)")
-        }
-        else if let results = placemarks
-        {
-            locations = results.flatMap {
-                result -> Location? in
-                
-                guard let name = result.name else {return nil}
-                guard let location = result.location else {return nil}
-                
-                return Location(name: name, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        
+        
+        viewModel.queryingStatusDidChange = {
+            [unowned self] isQuerying in
+            if isQuerying
+            {
+                self.title = "搜索中..."
             }
-            
-            tableView.reloadData()
+            else
+            {
+                self.title = "添加"
+            }
+        }
+        viewModel.locationsDidChange = {
+            [unowned self] locations in
+            self.tableView.reloadData()
         }
     }
 }
 
+
+// MARK: === tableView相关
 extension AddLocationController: UITableViewDelegate, UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return locations.count;
+        return viewModel.numberOfLocations;
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
@@ -98,28 +73,31 @@ extension AddLocationController: UITableViewDelegate, UITableViewDataSource
             fatalError("cell error")
         }
         
-        let location = locations[indexPath.row]
-        let vm = LocationViewModel(location: location.location, locationText: location.name)
-        cell.configure(with: vm)
+        if let viewModel = viewModel.locationViewModel(at: indexPath.row)
+        {
+            cell.configure(with: viewModel)
+        }
         
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let location = locations[indexPath.row]
-        delegate?.controller(self, location: location)
-        
-        navigationController?.popViewController(animated: true)
+        if let location = viewModel.location(at: indexPath.row)
+        {
+            delegate?.controller(self, location: location)
+            navigationController?.popViewController(animated: true)
+        }
     }
 }
 
 
+// MARK: === searchBar相关
 extension AddLocationController: UISearchBarDelegate
 {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
     {
         searchBar.resignFirstResponder()
-        geocode(address: searchBar.text)
+        viewModel.queryText = searchBar.text ?? ""
     }
 }
 
