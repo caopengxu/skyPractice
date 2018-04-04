@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import RxSwift
 
 class SkyController: UIViewController {
 
@@ -36,6 +37,8 @@ class SkyController: UIViewController {
     fileprivate let segueSettings = "SegueSettings"
     fileprivate let segueLocation = "SegueLocation"
     
+    private var bag = DisposeBag()
+    
     @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {}
     
     
@@ -62,7 +65,6 @@ class SkyController: UIViewController {
                 }
                 
                 destination.delegate = self
-                destination.viewMdoel = CurrentWeatherViewModel()
                 currentWeatherController = destination
             case segueWeekWeather:
                 guard let destination = segue.destination as? WeekWeatherController else
@@ -146,9 +148,9 @@ class SkyController: UIViewController {
             }
             else if let city = placemarks?.first?.locality
             {
-                let l = Location(name: city, latitude: lat, longitude: lon)
+                let location = Location(name: city, latitude: lat, longitude: lon)
                 
-                self.currentWeatherController.viewMdoel?.location = l
+                self.currentWeatherController.locationVM.accept(CurrentLocationViewModel(location: location))
             }
         })
     }
@@ -162,18 +164,11 @@ class SkyController: UIViewController {
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
         
-        WeatherDataManager.shared.weatherDataAt(latitude: lat, longitude: lon) { (weatherData, error) in
-            
-            if let error = error
-            {
-                dump(error)
-            }
-            else if let weatherData = weatherData
-            {
-                self.currentWeatherController.viewMdoel?.weather = weatherData
-                self.weekWeatherController.viewModel = WeekWeatherViewModel(weatherData: weatherData.daily.data)                
-            }
-        }
+        WeatherDataManager.shared.weatherDataAt(latitude: lat, longitude: lon)
+            .subscribe(onNext: {
+                self.currentWeatherController.weatherVM.accept(CurrentWeatherViewModel(weather: $0))
+                self.weekWeatherController.viewModel = WeekWeatherViewModel(weatherData: $0.daily.data)
+            }).disposed(by: bag)
     }
 }
 

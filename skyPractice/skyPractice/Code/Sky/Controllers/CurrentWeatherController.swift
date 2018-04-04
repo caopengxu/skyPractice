@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol CurrentWeatherControllerDelegate: class
 {
@@ -26,52 +28,46 @@ class CurrentWeatherController: WeatherController {
     
     weak var delegate: CurrentWeatherControllerDelegate?
     
-    var viewMdoel: CurrentWeatherViewModel?
-    {
-        didSet
-        {
-            DispatchQueue.main.async {
-                self.updateView()
-            }
-        }
-    }
+    fileprivate var bag = DisposeBag()
+    var weatherVM: BehaviorRelay<CurrentWeatherViewModel> = BehaviorRelay(value: CurrentWeatherViewModel.empty)
+    var locationVM: BehaviorRelay<CurrentLocationViewModel> = BehaviorRelay(value: CurrentLocationViewModel.empty)
     
     
     // viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        // 订阅
+        Observable.combineLatest(locationVM, weatherVM) {
+            return ($0, $1)
+        }
+        .filter {
+            let (location, weather) = $0
+            return !(location.isEmpty) && !(weather.isEmpty)
+        }
+        .observeOn(MainScheduler.instance)
+        .subscribe(onNext: {
+            [unowned self] in
+            let (location, weather) = $0
+            
+            self.activityIndicatorView.stopAnimating()
+            self.weatherContainerView.isHidden = false
+            
+            self.locationLabel.text = location.city
+            self.temperatureLabel.text = weather.temperature
+            self.weatherIcon.image = weather.weatherIcon
+            self.humidityLabel.text = weather.humidity
+            self.summaryLabel.text = weather.summary
+            self.dateLabel.text = weather.date
+        }).disposed(by: bag)
     }
 
     
-    // 更新UI(1)
+    // 更新UI
     func updateView()
     {
-        activityIndicatorView.stopAnimating()
-        
-        if let viewModel = viewMdoel, viewModel.isUpdateReady
-        {
-            updateWeatherContainer(with: viewMdoel!)
-        }
-        else
-        {
-            loadingFailedLabel.isHidden = false
-        }
-    }
-    
-    
-    // 更新UI(2)
-    fileprivate func updateWeatherContainer(with viewModel: CurrentWeatherViewModel)
-    {
-        weatherContainerView.isHidden = false
-        
-        locationLabel.text = viewModel.city
-        temperatureLabel.text = viewModel.temperature
-        weatherIcon.image = viewModel.weatherIcon
-        humidityLabel.text = viewModel.humidity
-        summaryLabel.text = viewModel.summary
-        dateLabel.text = viewModel.date
+        weatherVM.accept(weatherVM.value)
+        locationVM.accept(locationVM.value)
     }
     
     

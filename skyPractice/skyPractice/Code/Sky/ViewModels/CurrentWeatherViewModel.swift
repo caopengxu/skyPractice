@@ -10,46 +10,8 @@ import UIKit
 
 struct CurrentWeatherViewModel {
     
-    var isLocationReady = false
-    var isWeatherReady = false
-    var isUpdateReady: Bool
-    {
-        return isLocationReady && isWeatherReady
-    }
+    var weather: WeatherData
     
-    var location: Location!
-    {
-        didSet
-        {
-            if location != nil
-            {
-                self.isLocationReady = true
-            }
-            else
-            {
-                self.isLocationReady = false
-            }
-        }
-    }
-    var weather: WeatherData!
-    {
-        didSet
-        {
-            if weather != nil
-            {
-                self.isWeatherReady = true
-            }
-            else
-            {
-                self.isWeatherReady = false
-            }
-        }
-    }
-    
-    var city: String
-    {
-        return location.name
-    }
     var weatherIcon: UIImage
     {
         return UIImage.weatherIcon(of: weather.currently.icon)!
@@ -80,6 +42,13 @@ struct CurrentWeatherViewModel {
         
         return formatter.string(from: weather.currently.time)
     }
+    
+    var isEmpty: Bool
+    {
+        return self.weather == WeatherData.empty
+    }
+    
+    static let empty = CurrentWeatherViewModel(weather: WeatherData.empty)
 }
 
 

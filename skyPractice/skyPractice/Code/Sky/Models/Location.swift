@@ -17,21 +17,20 @@ struct Location {
         static let longitude = "longitude"
     }
     
-    
     var name: String
     var latitude: Double
     var longitude: Double
-    
     
     var location: CLLocation
     {
         return CLLocation(latitude: latitude, longitude: longitude)
     }
-    
     var toDictionary: [String: Any]
     {
         return ["name": name, "latitude": latitude, "longitude": longitude]
     }
+    static let empty = Location(name: "", latitude: 0, longitude: 0)
+    
     
     init(name: String, latitude: Double, longitude: Double)
     {

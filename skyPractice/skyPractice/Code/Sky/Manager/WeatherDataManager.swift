@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 enum DataManagerError: Error {
     case failedRequest
@@ -17,12 +19,11 @@ enum DataManagerError: Error {
 
 final class WeatherDataManager {
     
-    typealias CompletionHandler = (WeatherData?, DataManagerError?) -> Void
-    
-    let baseURL: URL
-    let urlSession: URLSession
+    private let baseURL: URL
+    private let urlSession: URLSession
     
     static let shared = WeatherDataManager.init(baseURL: API.authenticatedURL, urlSession:URLSession.shared)
+    
     
     // init
     init(baseURL: URL, urlSession: URLSession) {
@@ -32,7 +33,7 @@ final class WeatherDataManager {
     
     
     // 请求天气数据
-    func weatherDataAt(latitude: Double, longitude: Double, completion: @escaping CompletionHandler)
+    func weatherDataAt(latitude: Double, longitude: Double) -> Observable<WeatherData>
     {
         let url = baseURL.appendingPathComponent("\(latitude), \(longitude)")
         var request = URLRequest(url: url)
@@ -40,46 +41,52 @@ final class WeatherDataManager {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
         
-        self.urlSession.dataTask(with: request) { (data, response, error) in
-            self.didFinishGettingWeatherData(data: data, response: response, error: error, completion: completion)
-        }.resume()
+        return urlSession.rx.data(request: request).map {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
+            return try decoder.decode(WeatherData.self, from: $0)
+        }
+        
+//        self.urlSession.dataTask(with: request) { (data, response, error) in
+//            self.didFinishGettingWeatherData(data: data, response: response, error: error, completion: completion)
+//        }.resume()
     }
     
     
-    // 处理天气数据
-    func didFinishGettingWeatherData(data: Data?, response: URLResponse?, error: Error?, completion: CompletionHandler)
-    {
-        if let _ = error
-        {
-            completion(nil, DataManagerError.failedRequest)
-        }
-        else if let data = data, let response = response as? HTTPURLResponse
-        {
-            if response.statusCode == 200
-            {
-                do
-                {
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .secondsSince1970
-                    
-                    let weatherData = try decoder.decode(WeatherData.self, from: data)
-                    completion(weatherData, nil)
-                }
-                catch
-                {
-                    completion(nil, DataManagerError.invalidResponse)
-                }
-            }
-            else
-            {
-                completion(nil, DataManagerError.failedRequest)
-            }
-        }
-        else
-        {
-            completion(nil, DataManagerError.unknown)
-        }
-    }
+//    // 处理天气数据
+//    func didFinishGettingWeatherData(data: Data?, response: URLResponse?, error: Error?, completion: CompletionHandler)
+//    {
+//        if let _ = error
+//        {
+//            completion(nil, DataManagerError.failedRequest)
+//        }
+//        else if let data = data, let response = response as? HTTPURLResponse
+//        {
+//            if response.statusCode == 200
+//            {
+//                do
+//                {
+//                    let decoder = JSONDecoder()
+//                    decoder.dateDecodingStrategy = .secondsSince1970
+//
+//                    let weatherData = try decoder.decode(WeatherData.self, from: data)
+//                    completion(weatherData, nil)
+//                }
+//                catch
+//                {
+//                    completion(nil, DataManagerError.invalidResponse)
+//                }
+//            }
+//            else
+//            {
+//                completion(nil, DataManagerError.failedRequest)
+//            }
+//        }
+//        else
+//        {
+//            completion(nil, DataManagerError.unknown)
+//        }
+//    }
 }
 
 
