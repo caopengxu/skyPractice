@@ -119,11 +119,16 @@ class SkyController: UIViewController {
     // 请求地理授权
     @objc func applicationDidBecomeActive(notification: Notification)
     {
-        locationManager.delegate = self
+//        locationManager.delegate = self
         
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
         {
-            locationManager.requestLocation()
+//            locationManager.requestLocation()
+            locationManager.startUpdatingLocation()
+            locationManager.rx.didUpdateLocations.take(1).subscribe(
+                onNext: {
+                    self.currentLocation = $0.first
+            }).disposed(by: bag)
         }
         else
         {
@@ -192,30 +197,30 @@ class SkyController: UIViewController {
 
 
 
-extension SkyController: CLLocationManagerDelegate
-{
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-    {
-        if let location = locations.first
-        {
-            currentLocation = location
-            manager.delegate = nil
-            
-            manager.stopUpdatingLocation()
-        }
-    }
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
-    {
-        if status == .authorizedWhenInUse
-        {
-            manager.requestLocation()
-        }
-    }
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
-    {
-        dump(error)
-    }
-}
+//extension SkyController: CLLocationManagerDelegate
+//{
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+//    {
+//        if let location = locations.first
+//        {
+//            currentLocation = location
+//            manager.delegate = nil
+//
+//            manager.stopUpdatingLocation()
+//        }
+//    }
+//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
+//    {
+//        if status == .authorizedWhenInUse
+//        {
+//            manager.requestLocation()
+//        }
+//    }
+//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+//    {
+//        dump(error)
+//    }
+//}
 
 
 extension SkyController: CurrentWeatherControllerDelegate
