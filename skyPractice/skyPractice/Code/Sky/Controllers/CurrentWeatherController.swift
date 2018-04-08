@@ -38,30 +38,27 @@ class CurrentWeatherController: WeatherController {
         super.viewDidLoad()
 
         // 订阅
-        Observable.combineLatest(locationVM, weatherVM) {
+        let viewModel = Observable.combineLatest(locationVM, weatherVM) {
             return ($0, $1)
         }
         .filter {
             let (location, weather) = $0
             return !(location.isEmpty) && !(weather.isEmpty)
         }
-        .observeOn(MainScheduler.instance)
-        .subscribe(onNext: {
-            [unowned self] in
-            let (location, weather) = $0
-            
-            self.activityIndicatorView.stopAnimating()
-            self.weatherContainerView.isHidden = false
-            
-            self.locationLabel.text = location.city
-            self.temperatureLabel.text = weather.temperature
-            self.weatherIcon.image = weather.weatherIcon
-            self.humidityLabel.text = weather.humidity
-            self.summaryLabel.text = weather.summary
-            self.dateLabel.text = weather.date
-        }).disposed(by: bag)
+        .share(replay: 1, scope: .whileConnected)
+        .asDriver(onErrorJustReturn: (CurrentLocationViewModel.empty, CurrentWeatherViewModel.empty))
+    
+        viewModel.map {_ in false}.drive(self.activityIndicatorView.rx.isAnimating).disposed(by: bag)
+        viewModel.map {_ in false}.drive(self.weatherContainerView.rx.isHidden).disposed(by: bag)
+        
+        viewModel.map {$0.0.city}.drive(self.locationLabel.rx.text).disposed(by: bag)
+        viewModel.map {$0.1.temperature}.drive(self.temperatureLabel.rx.text).disposed(by: bag)
+        viewModel.map {$0.1.weatherIcon}.drive(self.weatherIcon.rx.image).disposed(by: bag)
+        viewModel.map {$0.1.humidity}.drive(self.humidityLabel.rx.text).disposed(by: bag)
+        viewModel.map {$0.1.summary}.drive(self.summaryLabel.rx.text).disposed(by: bag)
+        viewModel.map {$0.1.date}.drive(self.dateLabel.rx.text).disposed(by: bag)
     }
-
+    
     
     // 更新UI
     func updateView()

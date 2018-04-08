@@ -133,7 +133,7 @@ class SkyController: UIViewController {
     
     
     // 地理编码获取城市信息
-    func fetchCity()
+    private func fetchCity()
     {
         guard let currentLocation = currentLocation else {return}
         
@@ -157,18 +157,36 @@ class SkyController: UIViewController {
     
     
     // 根据地理位置获取天气信息
-    func fetchWeather()
+    private func fetchWeather()
     {
         guard let currentLocation = currentLocation else {return}
         
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
         
-        WeatherDataManager.shared.weatherDataAt(latitude: lat, longitude: lon)
-            .subscribe(onNext: {
-                self.currentWeatherController.weatherVM.accept(CurrentWeatherViewModel(weather: $0))
-                self.weekWeatherController.viewModel = WeekWeatherViewModel(weatherData: $0.daily.data)
-            }).disposed(by: bag)
+        let weather = WeatherDataManager.shared.weatherDataAt(latitude: lat, longitude: lon)
+            .share(replay: 1, scope: .whileConnected)
+//            .asDriver(onErrorJustReturn: WeatherData.empty)
+        
+        
+//        weather.map {CurrentWeatherViewModel(weather: $0)}.drive(self.currentWeatherController.weatherVM).disposed(by: bag)
+//        weather.map {}
+        weather.map { CurrentWeatherViewModel(weather: $0) }
+            .bind(to: self.currentWeatherController.weatherVM)
+            .disposed(by: bag)
+//        weather.map { WeekWeatherViewModel(weatherData: $0.daily.data) }
+//            .subscribe({
+//                self.weekWeatherController.viewModel = $0
+//            })
+//            .disposed(by: bag)
+        
+        
+        
+        
+//            .subscribe(onNext: {
+//                self.currentWeatherController.weatherVM.accept(CurrentWeatherViewModel(weather: $0))
+//                self.weekWeatherController.viewModel = WeekWeatherViewModel(weatherData: $0.daily.data)
+//            }).disposed(by: bag)
     }
 }
 

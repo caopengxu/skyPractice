@@ -26,6 +26,7 @@
 		BF766D64206B48AD00D22974 /* LocationRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF766D63206B48AD00D22974 /* LocationRepresentable.swift */; };
 		BF766D66206DCD4C00D22974 /* AddLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF766D65206DCD4C00D22974 /* AddLocationViewModel.swift */; };
 		BF9AEAED206F6429007DDD39 /* CurrentLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9AEAEC206F6429007DDD39 /* CurrentLocationViewModel.swift */; };
+		BFEB2D572079C94F005B0FA3 /* CLLocationManager+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEB2D562079C94F005B0FA3 /* CLLocationManager+Rx.swift */; };
 		BFF50CFE2060A4950071D5EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF50CFD2060A4950071D5EE /* AppDelegate.swift */; };
 		BFF50D052060A4950071D5EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFF50D042060A4950071D5EE /* Assets.xcassets */; };
 		BFF50D082060A4950071D5EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFF50D062060A4950071D5EE /* LaunchScreen.storyboard */; };
@@ -85,6 +86,7 @@
 		BF766D63206B48AD00D22974 /* LocationRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepresentable.swift; sourceTree = "<group>"; };
 		BF766D65206DCD4C00D22974 /* AddLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewModel.swift; sourceTree = "<group>"; };
 		BF9AEAEC206F6429007DDD39 /* CurrentLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationViewModel.swift; sourceTree = "<group>"; };
+		BFEB2D562079C94F005B0FA3 /* CLLocationManager+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationManager+Rx.swift"; sourceTree = "<group>"; };
 		BFF50CFA2060A4950071D5EE /* skyPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = skyPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFF50CFD2060A4950071D5EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFF50D042060A4950071D5EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				BFF50D4C206259A00071D5EE /* SkyUIImage.swift */,
 				BFF50D602064D4000071D5EE /* UserDefaults.swift */,
 				BF3DA455206B356F0042E346 /* CLLocation.swift */,
+				BFEB2D562079C94F005B0FA3 /* CLLocationManager+Rx.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				BFF50D3B2061F5980071D5EE /* WeatherController.swift in Sources */,
 				BF766D64206B48AD00D22974 /* LocationRepresentable.swift in Sources */,
 				BF3DA44F206B2AAC0042E346 /* CurrentWeatherViewModel.swift in Sources */,
+				BFEB2D572079C94F005B0FA3 /* CLLocationManager+Rx.swift in Sources */,
 				BF766D60206B485600D22974 /* LocationViewModel.swift in Sources */,
 				BFF50D5B2064AB3A0071D5EE /* SettingsController.swift in Sources */,
 				BFF50D4520622DCE0071D5EE /* WeatherData.swift in Sources */,
